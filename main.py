@@ -17,7 +17,7 @@ def bind(self, msg):
             self.sendmsg("Doger", "tip " + sourcenick + " " + str(dogewon))
 
 def init(self):
-    self.sendmsg("NickServ", "identify" + config['pass'])
+    self.sendmsg("NickServ", "identify " + config['pass'])
 client = irc.IRCClient("irc.freenode.net", 6667, config['nick'], config['channels'], bind, init).client
 try:
     excluded = open("excluded.txt", "r")
