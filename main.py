@@ -3,13 +3,27 @@ import random
 import irc
 from config import *
 
+balance_requester = ""
+
 
 def bind(self, msg):
     rawmsg = msg.split()
     filmsg = ' '.join(rawmsg[3:])[1:]
     source = rawmsg[2]
     sourcenick = rawmsg[0][1:].split("!")[0]
-    if filmsg == "!help":
+    if sourcenick == "Doger":
+        print("DBG: got message from doger")
+        if "you tried" in filmsg.lower():
+            ourbal = int(filmsg.split(" ")[10][2:])
+            short = int(filmsg.split(" ")[5][2:]) - ourbal
+            self.sendmsg(config['channels'][0], "Oops. Sorry, but I cannot proceed your win, because I'm D"
+                         + str(short) + " short :(.")
+        elif "your balance" in filmsg.lower():
+            ourbal = int(filmsg.split(" ")[4][2:])
+            print("DEBUG: checked balance, got: " + str(ourbal))
+            global balance_requester
+            self.sendmsg(balance_requester, "My balance is " + str(ourbal))
+    if filmsg.lower() == "!help":
         self.sendmsg(source, "Hi! I am DogeChat, a IRC waterbowl bot made by SopaXorzTaker, please donate by \n"
                              "!tip dogechat-bot <amount> \n")
     elif filmsg.split(" ")[0] == "!dcdo" and sourcenick in config['owners']:
@@ -19,10 +33,15 @@ def bind(self, msg):
             self.sendmsg(source, str(out))
         except:
             self.sendmsg(source, "Error executing command :P")
+    elif filmsg.lower() == "!dcbal":
+        global balance_requester
+        balance_requester = source
+        self.sendmsg("Doger", "balance")
+        self.sendmsg(source, "fetching balance...")
 
     elif source in config['channels'] and random.randint(0, 10) == 5 and not sourcenick in config['excluded_nicks'] \
             and len(filmsg) > 9:
-        dogewon = random.randint(10, 100)
+        dogewon = random.randint(10, 50)
         self.sendmsg(source, "Wow! " + sourcenick + " just won " + str(dogewon) + " doges!")
         self.sendmsg("Doger", "tip " + sourcenick + " " + str(dogewon))
 
