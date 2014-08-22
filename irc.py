@@ -1,4 +1,5 @@
-import socket, threading
+import socket
+import threading
 
 
 class IRCClient():
@@ -53,5 +54,6 @@ class IRCClient():
 
     def me(self, to, action):
         self.send("PRIVMSG " + to + " :" + "\x01ACTION " + action + "\x01")
+
         def __exit__(self, exc_type, exc_val, exc_tb):
             self.running = False
