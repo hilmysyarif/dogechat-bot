@@ -22,10 +22,11 @@ def bind(self, msg):
             ourbal = int(filmsg.split(" ")[4][2:])
             print("DEBUG: checked balance, got: " + str(ourbal))
             global balance_requester
-            self.sendmsg(balance_requester, "My balance is " + str(ourbal))
+            self.sendmsg(balance_requester, "My balance is " + str(ourbal) + ".")
     if filmsg.lower() == "!help":
         self.sendmsg(source, "Hi! I am DogeChat, a IRC waterbowl bot made by SopaXorzTaker, please donate by \n"
-                             "!tip dogechat-bot <amount> \n")
+                             "!tip dogechat-bot <amount> \n"
+                             "My commands are: !dcbal - checks my balance")
     elif filmsg.split(" ")[0] == "!dcdo" and sourcenick in config['owners']:
         command = " ".join(filmsg.split(" ")[1:])
         try:
@@ -34,10 +35,9 @@ def bind(self, msg):
         except:
             self.sendmsg(source, "Error executing command :P")
     elif filmsg.lower() == "!dcbal":
-        global balance_requester
         balance_requester = source
         self.sendmsg("Doger", "balance")
-        self.sendmsg(source, "fetching balance...")
+        self.sendmsg(source, "Fetching balance...")
 
     elif source in config['channels'] and random.randint(0, 10) == 5 and not sourcenick in config['excluded_nicks'] \
             and len(filmsg) > 9:
