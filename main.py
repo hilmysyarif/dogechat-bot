@@ -11,8 +11,7 @@ def bind(self, msg):
     filmsg = ' '.join(rawmsg[3:])[1:]
     source = rawmsg[2]
     sourcenick = rawmsg[0][1:].split("!")[0]
-    if sourcenick == "Doger":
-        print("DBG: got message from doger")
+    if sourcenick == "Doger" and source == config['nick']:
         if "you tried" in filmsg.lower():
             ourbal = int(filmsg.split(" ")[10][2:])
             short = int(filmsg.split(" ")[5][2:]) - ourbal
@@ -20,7 +19,6 @@ def bind(self, msg):
                          + str(short) + " short :(.")
         elif "your balance" in filmsg.lower():
             ourbal = int(filmsg.split(" ")[4][2:])
-            print("DEBUG: checked balance, got: " + str(ourbal))
             global balance_requester
             self.sendmsg(balance_requester, "My balance is " + str(ourbal) + ".")
     if filmsg.lower() == "!help":
