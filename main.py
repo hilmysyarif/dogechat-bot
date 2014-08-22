@@ -10,11 +10,12 @@ def bind(self, msg):
     if filmsg == "!help":
         self.sendmsg(source, "Hi! I am DogeChat, a IRC waterbowl bot, please donate by"
                              " /msg Doger tip dogechat-bot <amount>")
-    elif source == channel and random.randint(0, 10) == 5 and not sourcenick in excluded_nicks and len(filmsg) > 9:
+    elif source == config['channel'] and random.randint(0, 10) == 5 and not sourcenick in excluded_nicks \
+            and len(filmsg) > 9:
             dogewon = random.randint(1, 20)
             self.sendmsg(source, "Wow! " + sourcenick + " just won " + str(dogewon) + " doges!")
             self.sendmsg("Doger", "tip " + sourcenick + " " + str(dogewon))
-            tipAttempted = True
+        
 def init(self):
     self.sendmsg("NickServ", config['pass'])
 client = irc.IRCClient("irc.freenode.net", 6667, config['nick'], config['channels'], bind, init).client
